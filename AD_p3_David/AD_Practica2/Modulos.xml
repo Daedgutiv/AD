@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modulosVO>
+    <lista id="0">
+        <ciclo>1</ciclo>
+        <curso>2</curso>
+        <horas>2</horas>
+        <nombre>asdf</nombre>
+    </lista>
+</modulosVO>
