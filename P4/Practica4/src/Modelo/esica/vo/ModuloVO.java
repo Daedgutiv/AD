@@ -7,11 +7,11 @@ public class ModuloVO {
 
 	private String nombre;
 
-	private String curso;
+	private int curso;
 
 	private int id_ciclo;
 
-	private String horas;
+	private int horas;
 	
 	public int getId() {
 		return id;
@@ -24,10 +24,10 @@ public class ModuloVO {
 		this.nombre = nombre;
 	}
 	
-	public String getCurso() {
+	public int getCurso() {
 		return curso;
 	}
-	public void setCurso(String curso) {
+	public void setCurso(int curso) {
 		this.curso = curso;
 	}
 	
@@ -38,10 +38,10 @@ public class ModuloVO {
 		this.id_ciclo = ciclo;
 	}
 	
-	public String getHoras() {
+	public int getHoras() {
 		return horas;
 	}
-	public void setHoras(String horas) {
+	public void setHoras(int horas) {
 		this.horas = horas;
 	}
 	public void setId(int id) {

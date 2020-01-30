@@ -7,23 +7,36 @@ import java.util.Properties;
 
 public class Constantes {
 	
-	public String user;
-	public String password;
-	public String conexion;
-	public String driver;
+	public static String user;
+	public static String password;
+	public static String conexion;
+	public static String driver;
 	
-	public Constantes() throws FileNotFoundException, IOException {
+	public Constantes(String user, String pass, String con, String driver) throws FileNotFoundException, IOException {
+			
+		this.user = user;
+		this.password = pass;
+		this.conexion = con;
+		this.driver =driver;
 		
-		Properties props = new Properties();
-		
-		props.load(new FileInputStream("conect.props"));
-		
-		this.user = props.getProperty("user");
-		this.password = props.getProperty("password");
-		this.conexion = props.getProperty("conexion");
-		this.driver = props.getProperty("driver");
-		
-		System.out.println(this.user + this.driver + this.conexion + this.password);
 	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getConexion() {
+		return conexion;
+	}
+
+	public String getDriver() {
+		return driver;
+	}
+	
+	
 
 }

@@ -1,5 +1,7 @@
 package Vista.esica.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -127,6 +129,11 @@ public abstract class ModulosUI {
 		
 		nombreTextField = new JTextField();
 		nombreTextField.setBounds(10, 47, 372, 20);
+		nombreTextField.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent e) {
+		         //TODO 
+		        }
+		      });
 		frame.getContentPane().add(nombreTextField);
 		nombreTextField.setColumns(10);
 		
@@ -176,6 +183,7 @@ public abstract class ModulosUI {
 			}
 		});
 		btnGuardar.setBounds(235, 94, 89, 23);
+		btnGuardar.setEnabled(false);
 		frame.getContentPane().add(btnGuardar);
 		
 		btnLimpiar = new JButton("Limpiar");
@@ -272,7 +280,7 @@ public abstract class ModulosUI {
 	private void clearFields() {
 		id = null;
 		btnEliminar.setEnabled(false);
-		btnGuardar.setText("A�adir");
+		btnGuardar.setText("Añadir");
 		nombreTextField.setText("");
 		cursoTextField.setText("");
 		horasTextField.setText("");
