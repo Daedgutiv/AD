@@ -16,6 +16,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
 
@@ -34,82 +36,114 @@ public abstract class ModulosUI {
 	private Integer id;
 	private ArrayList<ComboxItem> ciclos;
 
-
 	/**
 	 * Create the application.
 	 */
 	public ModulosUI() {
-		initialize();		
+		initialize();
 	}
-	
+
 	/**
 	 * Muestra el formulario
 	 */
-	public void show(){
+	public void show() {
 		frame.setVisible(true);
 	}
-	
+
 	/**
-	 * Agregar un modulo en funcion de los valores de los campos:
-	 * nombre, ciclo, curso y horas
+	 * Agregar un modulo en funcion de los valores de los campos: nombre, ciclo,
+	 * curso y horas
 	 */
 	protected abstract void agregarModulo();
-	
+
 	/**
-	 * Edita un modulo seleccionado en funcion de los valores de los campos:
-	 * nombre, ciclo, curso y horas, id
+	 * Edita un modulo seleccionado en funcion de los valores de los campos: nombre,
+	 * ciclo, curso y horas, id
 	 */
 	protected abstract void editarModulo();
-	
+
 	/**
 	 * Elimina un modulo seleccionado
 	 */
 	protected abstract void eliminarModulo();
-	
+
 	/**
-	 * En este metodo deben implementarse las funcionalidades necesarias para transformar una lista de VO
-	 * en una lista de arrays de String (String[]) donde cada elemento sea un array con {"Nombre","Ciclo","Curso","Horas","ID"}
+	 * En este metodo deben implementarse las funcionalidades necesarias para
+	 * transformar una lista de VO en una lista de arrays de String (String[]) donde
+	 * cada elemento sea un array con {"Nombre","Ciclo","Curso","Horas","ID"}
+	 * 
 	 * @return
 	 */
-	protected abstract  List<String[]> transformarListaVO();
-	
+	protected abstract List<String[]> transformarListaVO();
+
 	/**
-	 * En este método deben recuperarse todos los ciclos que se deseen mostrar en el combo Ciclos y 
-	 * agregarlos empleando el método addCiclo(id,nombre)
+	 * En este método deben recuperarse todos los ciclos que se deseen mostrar en el
+	 * combo Ciclos y agregarlos empleando el método addCiclo(id,nombre)
 	 */
 	protected abstract void cargarComboCiclos();
-	
-	protected Integer getId(){
+
+	protected Integer getId() {
 		return this.id;
 	}
-	
-	protected String getNombre(){
+
+	protected String getNombre() {
 		return this.nombreTextField.getText();
 	}
-	
-	
-	protected Integer getCicloId(){
+
+	protected Integer getCicloId() {
 		Integer toret = null;
-		
+
 		toret = getCicloId(cicloComboBox.getSelectedIndex());
-		
+
 		return toret;
 	}
-	
-	protected String getCurso(){
+
+	protected String getCurso() {
 		return this.cursoTextField.getText();
 	}
-	
-	protected String getHoras(){
+
+	protected String getHoras() {
 		return this.horasTextField.getText();
 	}
-	
-	protected void addCiclo(int id, String nombre){
-		if(this.ciclos==null){
+
+	protected void addCiclo(int id, String nombre) {
+		if (this.ciclos == null) {
 			ciclos = new ArrayList<ComboxItem>();
 		}
-			ciclos.add(new ComboxItem(id,nombre));
-		
+		ciclos.add(new ComboxItem(id, nombre));
+
+	}
+
+	private boolean isNumeric(String texto) {
+
+		try {
+			Integer.valueOf(texto);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	private boolean comprobar() {
+
+		String nombre = nombreTextField.getText();
+		String curso = cursoTextField.getText();
+		String horas = horasTextField.getText();
+
+		if (nombre.trim().isEmpty() || curso.trim().isEmpty() || horas.trim().isEmpty()) {
+			return false;
+		} else if (isNumeric(curso) == false || isNumeric(horas) == false) {
+			return false;
+		} else if (Integer.valueOf(curso) <= 0 || Integer.valueOf(curso) > 9) {
+			return false;
+		} else if (Integer.valueOf(horas) <= 0 || Integer.valueOf(horas) > 999) {
+			return false;
+		} else if (nombre.length() > 60) {
+			return false;
+		}
+
+		return true;
+
 	}
 
 	/**
@@ -122,70 +156,100 @@ public abstract class ModulosUI {
 		frame.setBounds(100, 100, 676, 478);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(10, 31, 46, 14);
 		frame.getContentPane().add(lblNombre);
-		
+
 		nombreTextField = new JTextField();
 		nombreTextField.setBounds(10, 47, 372, 20);
-		nombreTextField.addActionListener(new ActionListener() {
-		      public void actionPerformed(ActionEvent e) {
-		         //TODO 
-		        }
-		      });
+		nombreTextField.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) {
+				    btnGuardar.setEnabled(comprobar());
+				  }
+				  public void removeUpdate(DocumentEvent e) {
+					  btnGuardar.setEnabled(comprobar());
+				  }
+				  public void insertUpdate(DocumentEvent e) {
+					  btnGuardar.setEnabled(comprobar());
+				  }
+		});
+
 		frame.getContentPane().add(nombreTextField);
 		nombreTextField.setColumns(10);
-		
+
 		JLabel lblCiclo = new JLabel("Ciclo");
 		lblCiclo.setBounds(410, 31, 250, 14);
 		frame.getContentPane().add(lblCiclo);
-		
+
 		JLabel lblCurso = new JLabel("Curso");
 		lblCurso.setBounds(10, 78, 46, 14);
 		frame.getContentPane().add(lblCurso);
-		
-		//Combo ciclos 
-		cargarComboCiclos(); 
+
+		// Combo ciclos
+		cargarComboCiclos();
 		cicloComboBox = new JComboBox();
 		cicloComboBox.setBounds(410, 47, 250, 20);
-		for(ComboxItem it: ciclos){
-			cicloComboBox.addItem(it.getDescription()); 
+		for (ComboxItem it : ciclos) {
+			cicloComboBox.addItem(it.getDescription());
 		}
 		frame.getContentPane().add(cicloComboBox);
-		
-		
+
 		cursoTextField = new JTextField();
 		cursoTextField.setBounds(10, 94, 86, 20);
+		cursoTextField.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) {
+				    btnGuardar.setEnabled(comprobar());
+				  }
+				  public void removeUpdate(DocumentEvent e) {
+					  btnGuardar.setEnabled(comprobar());
+				  }
+				  public void insertUpdate(DocumentEvent e) {
+					  btnGuardar.setEnabled(comprobar());
+				  }
+		});
 		frame.getContentPane().add(cursoTextField);
 		cursoTextField.setColumns(10);
-		
+
 		JLabel lblHoras = new JLabel("Horas");
 		lblHoras.setBounds(126, 78, 46, 14);
 		frame.getContentPane().add(lblHoras);
-		
+
 		horasTextField = new JTextField();
 		horasTextField.setColumns(10);
 		horasTextField.setBounds(126, 94, 86, 20);
+		horasTextField.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) {
+				    btnGuardar.setEnabled(comprobar());
+				  }
+				  public void removeUpdate(DocumentEvent e) {
+					  btnGuardar.setEnabled(comprobar());
+				  }
+				  public void insertUpdate(DocumentEvent e) {
+					  btnGuardar.setEnabled(comprobar());
+				  }
+		});
 		frame.getContentPane().add(horasTextField);
-		
+
 		btnGuardar = new JButton("Añadir");
 		btnGuardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(id==null){
-					agregarModulo();
-				}else{
-					editarModulo();
+				if (btnGuardar.isEnabled()) {
+					if (id == null) {
+						agregarModulo();
+					} else {
+						editarModulo();
+					}
+					clearFields();
+					recargarTabla();
 				}
-				clearFields();
-				recargarTabla();
 			}
 		});
 		btnGuardar.setBounds(235, 94, 89, 23);
 		btnGuardar.setEnabled(false);
 		frame.getContentPane().add(btnGuardar);
-		
+
 		btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -196,47 +260,49 @@ public abstract class ModulosUI {
 		});
 		btnLimpiar.setBounds(334, 93, 89, 23);
 		frame.getContentPane().add(btnLimpiar);
-		
+
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(433, 93, 89, 23);
 		btnEliminar.setEnabled(false);
 		btnEliminar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(id!=null){
-					int res = JOptionPane.showConfirmDialog(null, "El módulo "+getNombre()+" se eliminará de forma permanente","Eliminar",JOptionPane.OK_CANCEL_OPTION);
-					if(res==JOptionPane.OK_OPTION){
+				if (id != null) {
+					int res = JOptionPane.showConfirmDialog(null,
+							"El módulo " + getNombre() + " se eliminará de forma permanente", "Eliminar",
+							JOptionPane.OK_CANCEL_OPTION);
+					if (res == JOptionPane.OK_OPTION) {
 						eliminarModulo();
 						clearFields();
 						recargarTabla();
-					}					
+					}
 				}
 			}
 		});
 		frame.getContentPane().add(btnEliminar);
-		
+
 		btnAlumnos = new JButton("Alumnos");
 		btnAlumnos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(id==null){
+				if (id == null) {
 					verAlumnos();
-				}else{
+				} else {
 					verAlumnosDeModulo();
 				}
 			}
 		});
 		btnAlumnos.setBounds(571, 93, 89, 23);
 		frame.getContentPane().add(btnAlumnos);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 139, 650, 2);
 		frame.getContentPane().add(separator);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 152, 650, 287);
 		frame.getContentPane().add(scrollPane);
-		
+
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -244,39 +310,38 @@ public abstract class ModulosUI {
 				btnEliminar.setEnabled(true);
 				btnGuardar.setText("Guardar");
 				nombreTextField.setText((String) table.getModel().getValueAt(table.getSelectedRow(), 0));
-				cicloComboBox.setSelectedIndex(getCicloIndex((String) table.getModel().getValueAt(table.getSelectedRow(), 1)));
+				cicloComboBox.setSelectedIndex(
+						getCicloIndex((String) table.getModel().getValueAt(table.getSelectedRow(), 1)));
 				cursoTextField.setText((String) table.getModel().getValueAt(table.getSelectedRow(), 2));
 				horasTextField.setText((String) table.getModel().getValueAt(table.getSelectedRow(), 3));
-				id = Integer.parseInt((String)table.getModel().getValueAt(table.getSelectedRow(), 4));
+				id = Integer.parseInt((String) table.getModel().getValueAt(table.getSelectedRow(), 4));
 			}
 		});
 		scrollPane.setViewportView(table);
-		 
+
 		recargarTabla();
-		
-		
+
 	}
-	
-	
-	private void recargarTabla(){
+
+	private void recargarTabla() {
 		DefaultTableModel tm = new DefaultTableModel();
 		tm.addColumn("Nombre");
 		tm.addColumn("Ciclo");
 		tm.addColumn("Curso");
 		tm.addColumn("Horas");
 		tm.addColumn("ID");
-		for(String[] s:transformarListaVO()){
+		for (String[] s : transformarListaVO()) {
 			s[1] = getCicloNombre(Integer.parseInt(s[1]));
 			tm.addRow(s);
 		}
-		
+
 		table.setModel(tm);
 		table.removeColumn(table.getColumnModel().getColumn(4));
 		table.getColumnModel().getColumn(0).setPreferredWidth(257);
 		table.getColumnModel().getColumn(1).setPreferredWidth(214);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
-	
+
 	private void clearFields() {
 		id = null;
 		btnEliminar.setEnabled(false);
@@ -286,78 +351,72 @@ public abstract class ModulosUI {
 		horasTextField.setText("");
 		table.clearSelection();
 	}
-	
-	private Integer getCicloId(int index){
+
+	private Integer getCicloId(int index) {
 		return ciclos.get(index).getId();
 	}
-	
-	private int getCicloIndex(String nombre){
+
+	private int getCicloIndex(String nombre) {
 		int i = 0;
-		for(i=0;i<ciclos.size();i++){
-			if(ciclos.get(i).getDescription().equalsIgnoreCase(nombre)){
+		for (i = 0; i < ciclos.size(); i++) {
+			if (ciclos.get(i).getDescription().equalsIgnoreCase(nombre)) {
 				break;
 			}
 		}
-		
+
 		return i;
 	}
-	
-	private String getCicloNombre(Integer id){
+
+	private String getCicloNombre(Integer id) {
 		String nombre = "";
-		for(ComboxItem it:ciclos){
-			if(it.getId().equals(id)){
-				nombre=it.getDescription();
+		for (ComboxItem it : ciclos) {
+			if (it.getId().equals(id)) {
+				nombre = it.getDescription();
 				break;
 			}
 		}
 		return nombre;
 	}
-	
-	private void verAlumnosDeModulo(){
+
+	private void verAlumnosDeModulo() {
 		// TODO Lanzar interfaz matricula
 		JOptionPane.showMessageDialog(null, "Esta funcionalidad aún no está implementada. Disculpe las molestias");
 	}
-	
-	private void verAlumnos(){
+
+	private void verAlumnos() {
 		// TODO Lanzar interfaz alumnos
 		verAlumnosDeModulo();
 	}
-	
-	class ComboxItem
-    {
-        private Integer id;
-        private String description;
-        private int position = 0;
 
-        public ComboxItem(Integer id, String description)
-        {
-            this.id = id;
-            this.description = description;
-        }
+	class ComboxItem {
+		private Integer id;
+		private String description;
+		private int position = 0;
 
-        public Integer getId()
-        {
-            return id;
-        }
+		public ComboxItem(Integer id, String description) {
+			this.id = id;
+			this.description = description;
+		}
 
-        public String getDescription()
-        {
-            return description;
-        }
-        
-        public int getIndex(){
-        	return position;
-        }
-        
-        public void setIndex(int index){
-        	position = index;
-        }
+		public Integer getId() {
+			return id;
+		}
 
-        public String toString()
-        {
-            return description;
-        }
-    }
-	
-	 
+		public String getDescription() {
+			return description;
+		}
+
+		public int getIndex() {
+			return position;
+		}
+
+		public void setIndex(int index) {
+			position = index;
+		}
+
+		public String toString() {
+			return description;
+		}
+	}
+
 }

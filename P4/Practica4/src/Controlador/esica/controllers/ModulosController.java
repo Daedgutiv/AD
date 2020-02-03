@@ -30,9 +30,18 @@ public class ModulosController extends ModulosUI {
 
 		if (getNombre().isEmpty() || getCurso().isEmpty() || getHoras().isEmpty() || getCicloId() == null) {
 			
+			if (getNombre().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "El campo Nombre está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} else if (getCurso().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "El campo Curso está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} else if (getHoras().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "El campo Horas está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} else if (getCicloId()==null) {
+				JOptionPane.showMessageDialog(null, "El campo Ciclo está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
 			
 		} else if (!isNumber(getCurso()) || !isNumber(getHoras())) {
-			System.out.println("Curso o horas no son números");
+			JOptionPane.showMessageDialog(null, "Curso o horas no son números", "ERROR", JOptionPane.ERROR_MESSAGE);
 		} else {
 			modulo.setNombre(getNombre());
 			modulo.setCurso(Integer.valueOf(getCurso()));
@@ -54,9 +63,17 @@ public class ModulosController extends ModulosUI {
 		ModuloVO modulo = new ModuloVO();
 
 		if (getNombre().isEmpty() || getCurso().isEmpty() || getHoras().isEmpty() || getCicloId() == null) {
-			System.out.println("Algún campo está vacío");
+			if (getNombre().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "El campo Nombre está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} else if (getCurso().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "El campo Curso está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} else if (getHoras().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "El campo Horas está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} else if (getCicloId()==null) {
+				JOptionPane.showMessageDialog(null, "El campo Ciclo está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
 		} else if (!isNumber(getCurso()) || !isNumber(getHoras())) {
-			System.out.println("Curso o horas no son números");
+			JOptionPane.showMessageDialog(null, "Curso o horas no son números", "ERROR", JOptionPane.ERROR_MESSAGE);
 		} else {
 			modulo.setNombre(getNombre());
 			modulo.setCurso(Integer.valueOf(getCurso()));
