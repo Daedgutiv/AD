@@ -29,6 +29,10 @@ public class CicloVO {
 		this.id = id;
 	}
 	
+	public int getId() {
+		return this.id;
+	}
+	
 	
 
 }

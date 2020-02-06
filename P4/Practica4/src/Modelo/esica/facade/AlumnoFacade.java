@@ -109,6 +109,11 @@ public class AlumnoFacade {
 		PreparedStatement ps = con.prepareStatement(MiSQL.eliminarAlumno);
 
 		ps.setString(1, alumno.getDni());
+		
+		ps.executeUpdate();
+		
+		ps.close();
+		con.close();
 
 	}
 	

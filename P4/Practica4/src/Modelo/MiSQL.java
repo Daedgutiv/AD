@@ -13,8 +13,10 @@ public class MiSQL {
 	
 	public static final String updateModulo = "UPDATE MODULO SET HORAS = ?, NOMBRE = ?, CURSO = ?, ID_CICLO = ? WHERE ID = ?";
 	public static final String updateAlumno = "UPDATE ALUMNO SET NOMBRE = ?, APELLIDO1 = ?, APELLIDO2 = ?, TELEFONO = ?, NACIMIENTO = ? WHERE DNI = ?";
+	public static final String updateCiclo = "UPDATE CICLO SET NOMBRE = ?, NIVEL = ?, CURSO = ? WHERE ID =?";
 	
 	public static final String eliminarModulo = "DELETE FROM MODULO WHERE ID = ?";
 	public static final String eliminarAlumno = "DELETE FROM ALUMNO WHERE DNI = ?";
+	public static final String eliminarCiclo = "DELETE FROM CICLO WHERE ID = ?";
 
 }
