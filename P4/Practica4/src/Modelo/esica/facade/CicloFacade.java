@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Modelo.Constantes;
 import Modelo.MiSQL;
 import Modelo.esica.vo.CicloVO;
@@ -21,6 +23,47 @@ public class CicloFacade {
 		Connection conexion = DriverManager.getConnection(Constantes.conexion, Constantes.user, Constantes.password);
 
 		return conexion;
+	}
+
+	public static boolean isNum(String a) {
+		try {
+			Integer.valueOf(a);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean comprobar(CicloVO c) {
+
+		if (c.getNivel().trim().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "El campo Nivel está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (c.getNivel().length() > 10) {
+			JOptionPane.showMessageDialog(null, "El campo Nivel es demasiado largo", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (c.getNombre().trim().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "El campo Nombre está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (c.getNombre().length() > 50) {
+			JOptionPane.showMessageDialog(null, "El campo Apellido1 está vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (isNum(String.valueOf(c.getCurso()))) {
+			JOptionPane.showMessageDialog(null, "El campo Curso no es un número", "ERROR", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (c.getCurso() > 9) {
+			JOptionPane.showMessageDialog(null, "El campo Curso es demasiado grade", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		return true;
 	}
 
 	public static ArrayList<CicloVO> leerCiclos() throws ClassNotFoundException, SQLException {
@@ -51,51 +94,55 @@ public class CicloFacade {
 
 	public static void anhadirCiclo(CicloVO ciclo) throws ClassNotFoundException, SQLException {
 
-		Connection con = conexionSQL();
+		if (comprobar(ciclo)) {
+			Connection con = conexionSQL();
 
-		PreparedStatement ps = con.prepareStatement(MiSQL.insertCiclo);
+			PreparedStatement ps = con.prepareStatement(MiSQL.insertCiclo);
 
-		ps.setString(1, ciclo.getNombre());
-		ps.setString(2, ciclo.getNivel());
-		ps.setInt(3, ciclo.getCurso());
+			ps.setString(1, ciclo.getNombre());
+			ps.setString(2, ciclo.getNivel());
+			ps.setInt(3, ciclo.getCurso());
 
-		ps.executeUpdate();
+			ps.executeUpdate();
 
-		ps.close();
-		con.close();
+			ps.close();
+			con.close();
+		}
 
 	}
 
 	public static void modificarCiclo(CicloVO ciclo) throws ClassNotFoundException, SQLException {
 
+		if (comprobar(ciclo)) {
+			Connection con = conexionSQL();
+
+			PreparedStatement ps = con.prepareStatement(MiSQL.updateCiclo);
+
+			ps.setString(1, ciclo.getNombre());
+			ps.setString(2, ciclo.getNivel());
+			ps.setInt(3, ciclo.getCurso());
+			ps.setInt(4, ciclo.getId());
+
+			ps.executeUpdate();
+
+			ps.close();
+
+			con.close();
+		}
+
+	}
+
+	public static void eliminarCiclo(CicloVO ciclo) throws ClassNotFoundException, SQLException {
 		Connection con = conexionSQL();
 
-		PreparedStatement ps = con.prepareStatement(MiSQL.updateCiclo);
-		
-		ps.setString(1, ciclo.getNombre());
-		ps.setString(2, ciclo.getNivel());
-		ps.setInt(3, ciclo.getCurso());
-		ps.setInt(4, ciclo.getId());
-		
-		ps.executeUpdate();
-		
-		ps.close();
-		
-		con.close();
-		
-	}
-	
-	public static void eliminarCiclo (CicloVO ciclo) throws ClassNotFoundException, SQLException {
-		Connection con = conexionSQL();
-		
 		PreparedStatement ps = con.prepareStatement(MiSQL.eliminarCiclo);
-		
+
 		ps.setInt(1, ciclo.getId());
-		
+
 		ps.executeUpdate();
-		
+
 		ps.close();
-		
+
 		con.close();
 	}
 

@@ -4,15 +4,15 @@ package Modelo.esica.vo;
 public class CursaVO {
 
 	private String dni;
-	private int anho;
+	private String anho;
 	private Integer id;
 	private float nota;
 
 	
-	public int getAnho() {
+	public String getAnho() {
 		return anho;
 	}
-	public void setAnho(int anho) {
+	public void setAnho(String anho) {
 		this.anho = anho;
 	}
 	
