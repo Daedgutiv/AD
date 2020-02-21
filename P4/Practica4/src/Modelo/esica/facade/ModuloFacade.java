@@ -8,10 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Modelo.Constantes;
 import Modelo.MiSQL;
 import Modelo.esica.vo.ModuloVO;
-import oracle.net.aso.c;
 
 public class ModuloFacade {
 
@@ -26,12 +27,16 @@ public class ModuloFacade {
 
 	public static boolean comprobarModulo(ModuloVO modulo) {
 		if (modulo.getHoras() > 999 || modulo.getHoras() <= 0) {
+			JOptionPane.showMessageDialog(null, "El campo Horas no es válido", "ERROR", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (modulo.getNombre().trim().isEmpty() || modulo.getNombre().length() > 60) {
+			JOptionPane.showMessageDialog(null, "El campo Nombre está vacío o excede la longitud máximo", "ERROR", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (modulo.getCurso() > 9 || modulo.getCurso() <= 0) {
+			JOptionPane.showMessageDialog(null, "El campo Curso no es válido", "ERROR", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (modulo.getCiclo() <= 0 || modulo.getCiclo() > 9) {
+			JOptionPane.showMessageDialog(null, "El campo Ciclo no es válido", "ERROR", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;

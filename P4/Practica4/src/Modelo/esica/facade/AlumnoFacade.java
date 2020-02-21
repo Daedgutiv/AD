@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -92,7 +93,11 @@ public class AlumnoFacade {
 			ps.setDate(5, alumno.getNacimiento());
 			ps.setString(6, alumno.getDni());
 
-			ps.executeUpdate();
+			try {
+				ps.executeUpdate();
+			} catch (SQLIntegrityConstraintViolationException e) {
+				JOptionPane.showMessageDialog(null, "El DNI está repetido", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
 
 			ps.close();
 			con.close();
@@ -131,7 +136,11 @@ public class AlumnoFacade {
 			ps.setString(5, alumno.getTelefono());
 			ps.setDate(6, alumno.getNacimiento());
 
-			ps.executeUpdate();
+			try {
+				ps.executeUpdate();
+			} catch (SQLIntegrityConstraintViolationException e) {
+				JOptionPane.showMessageDialog(null, "El DNI está repetido", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
 
 			ps.close();
 			con.close();

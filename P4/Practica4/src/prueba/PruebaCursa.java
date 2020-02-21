@@ -40,7 +40,7 @@ public class PruebaCursa {
 				cursa.setDni("22751693R");
 				cursa.setId(38);
 				cursa.setNota(10);
-				cursa.setAnho(2018);
+				cursa.setAnho("2018");
 				
 				break;
 			case 2:
