@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="es.esica.modelo.vo.ProductoVO" table="producto">
+		<id name="id" type="integer" column="id">
+			<generator class="increment"></generator>
+		</id>
+		<property name="descripcion" type="string"
+			column="descripcion" />
+		<property name="nombre" type="string" column="nombre" />
+		<property name="referencia" type="string" column="referencia" />
+		<property name="cantidad" type="integer" column="cantidad" />
+		<property name="precio" type="big_decimal" column="precio" />
+	</class>
+</hibernate-mapping>
