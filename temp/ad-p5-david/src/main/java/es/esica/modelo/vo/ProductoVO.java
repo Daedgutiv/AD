@@ -3,6 +3,11 @@ package es.esica.modelo.vo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+@XmlRootElement
 public class ProductoVO implements Serializable{
 
 	
@@ -29,6 +34,7 @@ public class ProductoVO implements Serializable{
 	/**
 	 * @return el valor de id
 	 */
+	@XmlTransient
 	public Integer getId() {
 		return id;
 	}
@@ -43,6 +49,7 @@ public class ProductoVO implements Serializable{
 	/**
 	 * @return el valor de nombre
 	 */
+	@XmlElement
 	public String getNombre() {
 		return nombre;
 	}
@@ -57,6 +64,7 @@ public class ProductoVO implements Serializable{
 	/**
 	 * @return el valor de referencia
 	 */
+	@XmlElement
 	public String getReferencia() {
 		return referencia;
 	}
@@ -71,6 +79,7 @@ public class ProductoVO implements Serializable{
 	/**
 	 * @return el valor de descripcion
 	 */
+	@XmlElement
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -85,6 +94,7 @@ public class ProductoVO implements Serializable{
 	/**
 	 * @return el valor de cantidad
 	 */
+	@XmlElement
 	public Integer getCantidad() {
 		return cantidad;
 	}
@@ -99,6 +109,7 @@ public class ProductoVO implements Serializable{
 	/**
 	 * @return el valor de precio
 	 */
+	@XmlElement
 	public BigDecimal getPrecio() {
 		return precio;
 	}
@@ -110,5 +121,9 @@ public class ProductoVO implements Serializable{
 		this.precio = precio;
 	}
 	
+	@Override
+	public String toString() {
+		return "Nombre: " + nombre + ", Descripción: " + descripcion + ", Referencia: " + referencia + ", Cantidad: " + cantidad + ", Precio: " + precio;
+	}
 	
 }

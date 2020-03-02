@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<productosVO>
+    <lista>
+        <cantidad>2</cantidad>
+        <descripcion>asdf</descripcion>
+        <nombre>asdf</nombre>
+        <precio>2.00</precio>
+        <referencia>asdf</referencia>
+    </lista>
+    <lista>
+        <cantidad>2</cantidad>
+        <descripcion>asdf</descripcion>
+        <nombre>asdf</nombre>
+        <precio>2.00</precio>
+        <referencia>asdf</referencia>
+    </lista>
+    <lista>
+        <cantidad>2</cantidad>
+        <descripcion>qwer</descripcion>
+        <nombre>qwer</nombre>
+        <precio>2.00</precio>
+        <referencia>qwer</referencia>
+    </lista>
+    <lista>
+        <cantidad>4</cantidad>
+        <descripcion>vdfg</descripcion>
+        <nombre>dsad</nombre>
+        <precio>5.00</precio>
+        <referencia>asdf</referencia>
+    </lista>
+</productosVO>
