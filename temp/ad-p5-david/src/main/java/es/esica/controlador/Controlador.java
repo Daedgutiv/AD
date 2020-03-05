@@ -117,7 +117,12 @@ public class Controlador extends VistaProducto {
 			}
 		}
 
-		ProductoFacade.eliminarProductos(ProductoFacade.recuperar().get(pos - 1));
+		try {
+			ProductoFacade.eliminarProductos(ProductoFacade.recuperar().get(pos - 1));
+		} catch (IndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(null, "Error el elemento seleccionado no pertenece a la lista", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
 
 	}
 
