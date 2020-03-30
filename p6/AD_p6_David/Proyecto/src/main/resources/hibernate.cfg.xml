@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernate.dialect.MariaDBDialect</property>
+
+		<property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mariadb://localhost:3306/acise</property>
+		<property name="hibernate.connection.username">aciseadmin</property>
+		<property name="hibernate.connection.password">acise</property>
+
+		<property name="show.sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- Mapeos -->
+		<mapping resource="entidad/Usuario.hbm.xml" />
+		<mapping resource="entidad/Prueba.hbm.xml" />
+		<mapping resource="entidad/Area.hbm.xml" />
+		<mapping resource="entidad/Enunciado.hbm.xml" />
+		<mapping resource="entidad/Respuesta.hbm.xml" />
+		<mapping resource="entidad/Tag.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="es.esica.modelo.entidad.Tag" table="tag">
+		<id name="id" type="integer" column="id">
+			<generator class="increment"></generator>
+		</id>
+		<property name="nombre" type="string" column="nombre" />
+		<set name="enunciados" table="enunciado_tag" cascade="all"
+			inverse="false">
+			<key>
+				<column name="id_tag"></column>
+			</key>
+			<many-to-many column="id_enunciado"
+				class="es.esica.modelo.entidad.Enunciado"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>
