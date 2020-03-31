@@ -12,7 +12,7 @@
 			<key>
 				<column name="dni_usuario"/>
 			</key>
-			<one-to-many class="es.modelo.entidad.Prueba"/>
+			<one-to-many class="es.esica.modelo.entidad.Prueba"/>
 		</set>
 	</class>
 </hibernate-mapping>
