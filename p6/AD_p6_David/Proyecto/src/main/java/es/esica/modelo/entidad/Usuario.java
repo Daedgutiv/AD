@@ -10,7 +10,7 @@ public class Usuario implements Serializable {
 	
 	private String clave;
 	private String dni;
-	private Set<Prueba> pruebas;
+	private Set<Prueba> pruebas = new HashSet<Prueba>();
 	
 	public Usuario() {
 		

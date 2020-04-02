@@ -1,13 +1,14 @@
 package es.esica.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Area implements Serializable {
 	
 	private int id;
 	private String area;
-	private Set<Enunciado> enunciados;
+	private Set<Enunciado> enunciados = new HashSet<Enunciado>();
 	
 	public Area() {
 		

@@ -2,6 +2,7 @@ package es.esica.modelo.entidad;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Prueba implements Serializable{
@@ -14,7 +15,7 @@ public class Prueba implements Serializable{
 	private float tiempo;
 	private Date fecha;
 	private Usuario usuario;
-	private Set<Enunciado> enunciados;
+	private Set<Enunciado> enunciados = new HashSet<Enunciado>();
 	
 	public Prueba() {
 		

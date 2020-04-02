@@ -7,9 +7,8 @@
 		<id name="id" type="integer" column="id">
 			<generator class="increment"></generator>
 		</id>
-		<property name="respuesta" type="string"
-			column="respuesta" />
-			<property name="correcta" type="true/false"></property>
+		<property name="respuesta" type="string" column="respuesta" />
+		<property name="correcta" type="true_false"></property>
 		<many-to-one name="enunciado">
 			<column name="id_enunciado"></column>
 		</many-to-one>

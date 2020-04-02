@@ -17,7 +17,7 @@
 			</key>
 			<one-to-many class="es.esica.modelo.entidad.Respuesta" />
 		</set>
-		<set name="pruebas" table="prueba_enunciado" cascade="all"
+		<set name="pruebas" table="prueba_enunciado" cascade="none"
 			inverse="true">
 			<key>
 				<column name="id_enunciado"></column>
